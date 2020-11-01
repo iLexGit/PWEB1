@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="es">
+    <meta charset ="utf-8">
+        <meta name="author" content="Alejandro Martí">
+        <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1">
+        <title>AC_Javascript_1</title>
+</html>
+<body>
+    <h1>CHECK THE JAVASCRIPT CONSOLE TO PLAY</h1>
+    <h3>press F12 and go to the "console" tab</h3>
+</body>
+<script>
+    //Objecte taulell
+    var taulell={
+        //Variable que conté l'estat actual del taulell
+        //per simplificar el programa s'ha deixat la casella 0  inutilitzada
+        //d'aquesta manera tenim de la 1 a la 9 que són els números que especificarà l'usuari
+        //(ens estalviem fer un -1 cada cop que volguem consultar)
+        estat : ["0",
+                " ", " ", " ",
+                " ", " ", " ",
+                " ", " ", " "],
+        //Reinicialitzar el taulell per si es fa més d'una partida seguida o es reinicia
+        neteja: function() {
+            for (let i = 1; i < taulell.estat.length ; i++){
+                taulell.estat[i] = " ";
+            };
+        },
+        pinta: function(){
+            console.log("\t\t\t"+ taulell.estat[7] +" | "+ taulell.estat[8] +" | "+ taulell.estat[9] +"\n\t\t\t---------\n"+
+                        "\t\t\t"+ taulell.estat[4] +" | "+ taulell.estat[5] +" | "+ taulell.estat[6] +"\n\t\t\t---------\n"+
+                        "\t\t\t"+ taulell.estat[1] +" | "+ taulell.estat[2] +" | "+ taulell.estat[3] +"\n\n");
+        }
+    };
+
+
+    //Message of the day
+    const MOTD = "\n----- BENVINGUTS AL ls-TIC-TAC-TOE -----\n\n\n";
+
+    //Estructura consant que conté les direrents combinacions de posicions al taulell
+    const combinacionsGuanyadores = [
+        [1,2,3],
+        [4,5,6],
+        [7,8,9],
+        [1,4,7],
+        [2,5,8],
+        [3,6,9],
+        [3,5,7],
+        [1,5,9]
+    ];
+
+    //Inicialitzem la consola
+    console.log(MOTD);
+    taulell.neteja();
+    comJugar();
+
+    //Funció de suport a l'usuari que permet tornar a veure el funcionament del programa
+    function comJugar(){
+        console.log("Aquest és el tauler:");
+        console.log("\t\t\t  |   |  \n\t\t\t---------\n\t\t\t  |   |  \n\t\t\t---------\n\t\t\t  |   |  \n\n");
+        console.log("Utilitza el teclat T9 per posicionar les jugades, així:")
+        console.log("\t\t\t7 | 8 | 9\n\t\t\t---------\n\t\t\t4 | 5 | 6\n\t\t\t---------\n\t\t\t1 | 2 | 3\n\n");
+        console.log("Executa la comanda \"creaPartida()\" per començar");
+        console.log("Executa la comanda \"reiniciarJoc()\" per tornar a començar\n\n");
+        console.warn("Per tornar a veure aquest missatge executa la funció \"comJugar()\"");
+    }
+
+    //Buidar totes les variables i tornar a l'estat inicial de la pàgina
+    function reiniciarJoc(){
+        clear();
+        console.log(MOTD);
+        taulell.neteja();
+        comJugar();
+    }
+
+    
+
+    function creaPartida(){
+        clear();
+    }
+
+    function pintaTauler(){
+        clear();
+    }
+    
+    function posaCreu(){
+
+    }
+
+    function posaRodona(){
+
+    }
+
+    function comprovaGuanyador(){
+
+    }
+
+</script>
