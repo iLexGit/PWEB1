@@ -14,13 +14,13 @@
     var Player1={
         symbol : "X",   
         nom: " ",
-        jugades : [0,0,0,0]
+        jugades : [0,0,0,0,0]
     }
     //Objecte player2
     var Player2={
         symbol : "O",
         nom: " ",
-        jugades : [0,0,0,0]
+        jugades : [0,0,0,0,0]
     }
     //L'estrucutra "jugades" ens facilitarà molt a l'hora de saber si ha guanyat la partida
     
@@ -33,16 +33,17 @@
     //Missatge que mostrem quan s'acaba la partida, l'inicialitzem buit i l'omplim segons el que passi
     var Win_Message = "Joc finalitzat abruptament per l'usuari";
 
+    //Variable que mapeja les coordenades nombres per facilitar-ne el tractament
     var coord_mapper={
-        "C1" : 1,
-        "C2" : 2,
-        "C3" : 3,
-        "B1" : 4,
-        "B2" : 5,
-        "B3" : 6,
-        "A1" : 7,
-        "A2" : 8,
-        "A3" : 9,
+        "3A" : 1,
+        "3B" : 2,
+        "3C" : 3,
+        "2A" : 4,
+        "2B" : 5,
+        "2C" : 6,
+        "1A" : 7,
+        "1B" : 8,
+        "1C" : 9,
         "-1-1": -1
     }
 
@@ -64,10 +65,10 @@
         },
         //Pinta l'estat actual del taulell a l'usuari
         pinta: function(){
-            console.log("\t\t\t  1   2   3\n"+
-                        "\t\t\tA "+ taulell.estat[7] +" | "+ taulell.estat[8] +" | "+ taulell.estat[9] +"\n\t\t\t  ---------\n"+
-                        "\t\t\tB "+ taulell.estat[4] +" | "+ taulell.estat[5] +" | "+ taulell.estat[6] +"\n\t\t\t  ---------\n"+
-                        "\t\t\tC "+ taulell.estat[1] +" | "+ taulell.estat[2] +" | "+ taulell.estat[3] +"\n\n");
+            console.log("\t\t\t  A   B   C\n"+
+                        "\t\t\t1 "+ taulell.estat[7] +" | "+ taulell.estat[8] +" | "+ taulell.estat[9] +"\n\t\t\t  ---------\n"+
+                        "\t\t\t2 "+ taulell.estat[4] +" | "+ taulell.estat[5] +" | "+ taulell.estat[6] +"\n\t\t\t  ---------\n"+
+                        "\t\t\t3 "+ taulell.estat[1] +" | "+ taulell.estat[2] +" | "+ taulell.estat[3] +"\n\n");
         },
         //variable de control de rondes, s'incrementa quan ha tirat el player2, en el cas que valgui 4 només pot jugar el player1, és l'última tirada
         rondes : 0,
@@ -88,7 +89,7 @@
         "258",
         "369",
         "357",
-        "159"
+        "159",
     ];
 
     //Inicialitzem la consola
@@ -100,7 +101,7 @@
     //Funció de suport a l'usuari que permet tornar a veure el funcionament del programa
     function comJugar(){
         console.log("Aquest és el tauler:");
-        console.log("\t\t\t  1   2   3\n\t\t\tA   |   |  \n\t\t\t  ---------\n\t\t\tB   |   |  \n\t\t\t  ---------\n\t\t\tC   |   |  \n\n");
+        console.log("\t\t\t  A   B   C\n\t\t\t1   |   |  \n\t\t\t  ---------\n\t\t\t2   |   |  \n\t\t\t  ---------\n\t\t\t3   |   |  \n\n");
         console.log("Executa la comanda \"creaPartida()\" per començar");
         console.log("Executa la comanda \"reiniciarJoc()\" o introdueix la coordenada \"(-1,-1)\" durant la partida per tornar a començar\n\n");
         console.warn("Per tornar a veure aquest missatge executa la funció \"comJugar()\"");
@@ -119,6 +120,7 @@
         comJugar();
     }
 
+    //Recorrem l'estructura dels jugadors per reinicialitzar-ne les propietats
     function resetPlayers(){
         for (var i = 0; i < 2 ; i++){
             players[i].nom = " ";
@@ -131,13 +133,15 @@
     function creaPartida(){
         reiniciarJoc();
         clear();
-        Player1.nom = prompt("Nom del Jugador 1");
-        Player2.nom = prompt("Nom del Jugador 2");
+        Player1.nom = prompt("Nom del Jugador 1"); //demanem el nom del jugador 1
+        Player2.nom = prompt("Nom del Jugador 2"); //demanem el nom del jugador 2
         inici_Random();
         pintaTauler();
         game();
     }
 
+    //Generem un valora leatori en el rang [0,1), el mutlipliquem per 10 i si es més gran o més petit que 5 fem que comenci un jugador o una altre
+    //A més, modifiquem l'estructura "players" per correspondre amb l'ordre d'aquesta partida
     function inici_Random(){
         var rand = Math.random();
         rand*=10;
@@ -148,27 +152,35 @@
         }
     }
 
+    //Lògica global del joc, només sortim si ja s'ha omplert tot el taulell (empat) o si hi ha guanyador
     function game(){
         while (!end){
             do{
-                coordX = prompt(players[taulell.control_torns].nom + ", introdueix una coordenada (A,B,C).\nRecorda: (-1,-1) = sortir");
-                coordY = prompt(players[taulell.control_torns].nom + ", introdueix una coordenada (1,2,3).\nRecorda: (-1,-1) = sortir");
-                coord = coord_mapper[coordX + coordY];
-                if(taulell.estat[coord] != " " && coord>=0){alert("Coordenada ocupda, torna a tirar"); coord = 0;
+                //demanem les coordenades de la tirada
+                coordX = prompt(players[taulell.control_torns].nom + ", introdueix la columna (A,B,C)/(a,b,c).\nRecorda: (-1,-1) = sortir");
+                coordY = prompt(players[taulell.control_torns].nom + ", introdueix la fila (1,2,3).\nRecorda: (-1,-1) = sortir");
+                //mapejem les coordenades a un nombre
+                coord = coord_mapper[coordY.toString() + coordX.toUpperCase()];
+                //comprovem validesa de la coordenada introduïda
+                if(coord == undefined || (taulell.estat[coord] != " " && coord>=0)){alert("Coordenada ocupda o errònia, torna a tirar"); coord = 0;
                 }else{
+                    //pintem una X o una O en funció del jugador que tingui el torn
                     if(players[taulell.control_torns].symbol == "X"){posaCreu(coord);
                     }else{posaRodona(coord);}
                 }
             }while(coord == 0);
-            if (coord < 0){clear(); reiniciarJoc(); 
-            break;}
+            //opció afegida, coordenada (-1,-1) reinicia el joc
+            if (coord < 0){clear(); reiniciarJoc(); break;}
+            //guardem la coordenada introduida al registre de triades de l'usuari
             players[taulell.control_torns].jugades[taulell.rondes] = coord;
+            //comprovem si en les seves tirades hi ha una combinació guanyadora
             end = comprovaGuanyador();
             pintaTauler();
         }
         console.warn(Win_Message);
     }
 
+    //Mostra el taulell amb les dades actualitzades i a més informa de la ronda acutal i del jugador a qui li toca tirar juntament amb el seu símbol
     function pintaTauler(){
         clear();
         console.log("\n\n\n\n\n\n\nRonda: " + taulell.rondes);
@@ -176,16 +188,19 @@
         taulell.pinta();
     }
     
+    //Aquestes due funcions reben un enter que és la posició en el taulell de la fitxa a inserir. Totes les comprovacions s'han fet abans de cridar-les
     function posaCreu(coord){
         taulell.estat[coord] = "X"
     }
-
+    
     function posaRodona(coord){
         taulell.estat[coord] = "O";
     }
 
+    //Funció que comprova l'estat del jugador que acaba de tirar per si ha fet una tirada guanyadora
     function comprovaGuanyador(){
         var match = 0;
+        //recorrem totes les possiblitats de combinacions guanaydores comparant-les amb les tirades de l'usuari, una a una.
         for(var i=0; i < combinacionsGuanyadores.length && match < 3; i++){
             match = 0;
             for(var p=0; p <= taulell.rondes ; p++){
@@ -193,18 +208,19 @@
             }
             
         }
-        
+        //si no hem trobat combinació guanaydora en el registre no hi ha guanyador encara
         if(match < 3){
-            if(taulell.rondes == 4){
+            if(taulell.rondes == 4){ //si estem a la 4a ronda només pot tirar el primer jugador, i quan ja ha tirat, si no ha guanyat, és empat.
                 Win_Message =   "LLÀSTIMA! LA PARTIDA HA ACABAT EN EMPAT";
-                return 3;
+                return 3; //amb aquest return trencarem el bucle infinit del joc
             }
             taulell.control_torns ? taulell.rondes++: "";
             taulell.control_torns = 1 - taulell.control_torns;
             return 0
         }
+        //Hem trobat combinació guanyadora pel que el jugador actual és el guanyador
         Win_Message = "FELICITATS " + players[taulell.control_torns].nom + " HAS GUANYAT LA PARTIDA!!";
-        return taulell.control_torns+1;
+        return taulell.control_torns+1; //amb aquest return trencarem el while infinit del joc
     }
 
 </script>
