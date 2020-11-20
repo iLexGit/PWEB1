@@ -1,8 +1,53 @@
+:root{
+    --generic_background: var(--generic_background)
+}
+  
 body{
     background: #E5E5E5;
     justify-content: center;
 }
 
+#header_desktop{
+    display: none;
+}
+
+.menu_buttons{
+    display: flex;
+    justify-content: space-evenly;
+    flex-wrap: nowrap;
+    align-items: center;
+}
+
+.nav_element{
+    margin-left: 26px;
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: normal;
+    font-size: 18px;
+    line-height: 21px;
+    font-feature-settings: 'cpsp' on;
+
+    color: #9A9A9A;
+}
+
+#search_input{
+    background: none;
+    border: none;
+    outline: none;
+    padding-left: 15px;
+}
+
+.search_bar{
+    background: #EFEFEF;
+    border-radius: 20px;
+    width: 272px;
+    height: 36px;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-between;
+    margin-right: 32px;
+}
 
 #header_mobile{
     background: #F6F6F6;;
@@ -23,9 +68,6 @@ body{
     border: none;
 }
 
-#header_desktop{
-    visibility: hidden;
-}
 
 .header_brand{
     left: calc(50% - 148px/2 + 0.5px);
@@ -49,7 +91,7 @@ main{
     padding-top: 75px;
     align-items: stretch;
     justify-content: center;
-    background: #F6F6F6;;
+    background: #F6F6F6;
     border-radius: 47px;
     max-width: 1000px;
     padding-left: 32px;
@@ -67,7 +109,7 @@ main{
     line-height: 16px;
     text-align: center;
 
-    color: #888484;
+    color: var(--generic_background);
 }
 
 #title{
@@ -76,7 +118,7 @@ main{
     font-weight: 300;
     font-size: 24px;
     line-height: 28px;
-    color: #888484;
+    color: var(--generic_background);
     margin-bottom: 26px;
 
 }
@@ -121,7 +163,7 @@ main{
 }
 
 .item_label{
-    color: #888484;
+    color: var(--generic_background);
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
@@ -131,7 +173,7 @@ main{
 }
 
 .item_price{
-    color: #888484;
+    color: var(--generic_background);
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
@@ -165,6 +207,7 @@ main{
     background: none;
     border: none;
     outline: none;
+    padding-left: 20px;
 }
 
 .discount_apply{
@@ -200,7 +243,7 @@ main{
     align-items: center;
     justify-content: center;
 
-    color: #888484;
+    color: var(--generic_background);
 
     margin-left: 9px;
 }
@@ -277,7 +320,18 @@ main{
     }
 
     #header_desktop{
-        visibility: visible;
+        display: flex;
+        position: absolute;
+        left: 0px;
+        top: 0px;
+        right: 0px;
+        height: 58px;
+        background: #FFFFFF;
+        box-shadow: 0px 1px 4px rgba(0, 0, 0, 0.1);
+        display: flex;
+        flex-wrap: nowrap;
+        justify-content: space-between;
+        align-items: center;
     }
 
     body{
@@ -316,10 +370,12 @@ main{
 
     main{
         grid-template-rows: auto auto auto auto;
+        margin-top: 0px;
+        padding-top: 26px;
     }
 
     #footer_mobile{
-        visibility: hidden;
+        display: none;
     }
     
     #footer_desktop{
