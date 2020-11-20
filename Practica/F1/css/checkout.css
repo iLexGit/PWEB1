@@ -29,6 +29,10 @@ body{
     color: #9A9A9A;
 }
 
+.nav_element:hover{
+    color: black;
+}
+
 #search_input{
     background: none;
     border: none;
@@ -46,6 +50,10 @@ body{
     align-items: center;
     justify-content: space-between;
     margin-right: 32px;
+}
+
+.search_bar:hover{
+    background-color: white;
 }
 
 #header_mobile{
@@ -148,12 +156,31 @@ main{
     min-width: 311px;
 }
 
+.item:hover{
+    background: darkgrey;
+}
+
 #item_count{
-    width: 50px;
+    width: 65px;
+    height: 47px;
     border-radius: 16px;
     border: none;
     margin-left: 20px;
     align-items: stretch;
+
+    font-family: Roboto;
+    font-style: normal;
+    font-weight: 500;
+    font-size: 24px;
+    line-height: 28px;
+    text-align: center;
+
+    color: #888484;
+}
+
+input[type=number]::-webkit-inner-spin-button, 
+input[type=number]::-webkit-outer-spin-button { 
+    opacity: 1;
 }
 
 
@@ -200,6 +227,10 @@ main{
     flex-direction: row;
     flex-wrap: nowrap;
     justify-content: space-between;
+}
+
+.discount_field:hover{
+    background: darkgrey;
 }
 
 .discount_code{
@@ -359,6 +390,10 @@ main{
 
     #item_count{
         order: 4;
+        font-size: 20px;
+        line-height: 23px;
+        width: 65px;
+        height: 47px;
     }
 
     .discount_section{
@@ -385,7 +420,7 @@ main{
 
     main{
         grid-template-rows: auto auto auto auto;
-        margin-top: 0px;
+        margin: auto;
         padding-top: 26px;
         padding-bottom: 0px;
     }
