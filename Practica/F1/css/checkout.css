@@ -1,5 +1,5 @@
 :root{
-    --generic_background: var(--generic_background)
+    --generic_Font_Color: #888484
 }
   
 body{
@@ -116,7 +116,7 @@ main{
     line-height: 16px;
     text-align: center;
 
-    color: var(--generic_background);
+    color: var(--generic_Font_Color);
 }
 
 #title{
@@ -125,7 +125,7 @@ main{
     font-weight: 300;
     font-size: 24px;
     line-height: 28px;
-    color: var(--generic_background);
+    color: var(--generic_Font_Color);
     margin-bottom: 26px;
 
 }
@@ -189,7 +189,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .item_label{
-    color: var(--generic_background);
+    color: var(--generic_Font_Color);
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
@@ -199,7 +199,7 @@ input[type=number]::-webkit-outer-spin-button {
 }
 
 .item_price{
-    color: var(--generic_background);
+    color: var(--generic_Font_Color);
     font-family: Roboto;
     font-style: normal;
     font-weight: normal;
@@ -283,7 +283,7 @@ input[type=number]::-webkit-outer-spin-button {
     align-items: center;
     justify-content: center;
 
-    color: var(--generic_background);
+    color: var(--generic_Font_Color);
 
     margin-left: 9px;
 }
