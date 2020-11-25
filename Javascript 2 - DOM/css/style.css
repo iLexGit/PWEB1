@@ -1,0 +1,53 @@
+.main_grid{
+    display: grid;
+    grid-template-areas: a a b c d e
+                         f f f f f f
+                         z z z g h z
+                         i i j k l m;
+    grid-gap: 5px;
+}
+
+#nom{
+    grid-area: a;
+}
+
+#unitats{
+    grid-area: b;
+}
+
+#preu_unitat{
+    grid-area: c;
+}
+
+#preu_total{
+    grid-area: d;
+}
+
+#opcions{
+    grid-area: e;
+}
+
+.table_head{
+    font: Arial;
+    background-color: silver;
+}
+
+#cart_elements{
+    grid-area: f;
+}
+
+.total_area{
+    grid-area: g;
+}
+
+#total{
+    grid-area: h;
+}
+
+.add_to_cart{
+    grid-area: i;
+}
+
+button{
+
+}
