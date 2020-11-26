@@ -1,6 +1,6 @@
 :root{
-    --padding: 5px;
-    --gap: 10px;
+    --padding: 3px;
+    --gap: 5px;
     --normal_width: 16%;
     --double_width: 32%;
     --normal_height: 34px;
@@ -8,6 +8,7 @@
 
 body{
     display: grid;
+    font: Arial;
     grid-template-rows: var(--normal_height)
                         auto
                         var(--normal_height)
@@ -15,31 +16,24 @@ body{
     grid-gap: var(--gap);
 }
 
-input[type=text]{
-    height: var(--normal_height);
-}
-
 .horizontal_flex{
     display: flex;
     flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-around;
     grid-gap: var(--gap);
 }
 
 label{
     font-weight: bold;
-    width: var(--normal_width);
 }
 
 #nom, #unitats, #preu_unitat, #preu_total, #opcions{
-    font: Arial;
+    font-size: 25px;
     color: white;
-    background-color: silver;
-    padding: var(--padding);
-}
-
-th{
+    background-color: darkgray;
     width: var(--normal_width);
-    text-align: left;
+    padding: var(--padding);
 }
 
 #nom{
@@ -54,20 +48,22 @@ th{
     grid-gap: var(--gap);
 }
 
-#item_nom{
-    width: var(--double_width);
+.input{
+    height: var(--normal_height);
+    width: var(--normal_width);
 }
 
-article{
+.input_doble{
+    width: var(--double_width);
+    height: var(--normal_height);
+}
+
+.button_area{
     display: flex;
     flex-wrap: nowrap;
-    flex-direction: row;
     align-items: center;
-    justify-content: space-between;
-}
-
-.item_nom{
-    width: var(--double_width);
+    justify-content: space-evenly;
+    width: var(--normal_width);
 }
 
 .total_area{
@@ -75,7 +71,8 @@ article{
     flex-wrap: nowrap;
     align-items: center;
     justify-content: end;
-    padding-right: var(--normal_width);
+    font-size: 25px;
+    font-weight: bold;
 }
 
 #total_label{
@@ -93,13 +90,7 @@ article{
     width: var(--double_width);
 }
 
-.button_area{
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-evenly;
-    width: var(--normal_width);
-}
+
 
 #button{
     background: none;
