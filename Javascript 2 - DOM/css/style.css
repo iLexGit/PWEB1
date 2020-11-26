@@ -1,53 +1,98 @@
-.main_grid{
+:root{
+    --padding: 5px;
+    --gap: 10px;
+    --normal_width: 16%;
+    --double_width: 32%;
+    --normal_height: 34px;
+}
+
+body{
     display: grid;
-    grid-template-areas: a a b c d e
-                         f f f f f f
-                         z z z g h z
-                         i i j k l m;
-    grid-gap: 5px;
-}
-
-#nom{
-    grid-area: a;
-}
-
-#unitats{
-    grid-area: b;
-}
-
-#preu_unitat{
-    grid-area: c;
-}
-
-#preu_total{
-    grid-area: d;
-}
-
-#opcions{
-    grid-area: e;
+    grid-template-rows: var(--normal_height)
+                        auto
+                        var(--normal_height)
+                        var(--normal_height);
+    grid-gap: var(--gap);
 }
 
 .table_head{
+    display: flex;
+    flex-direction: row;
+    grid-gap: var(--gap);
+}
+
+label{
+    font-weight: bold;
+    width: var(--normal_width);
+}
+
+#nom, #unitats, #preu_unitat, #preu_total, #opcions{
     font: Arial;
+    color: white;
     background-color: silver;
+    padding: var(--padding);
+}
+
+#nom{
+    width: var(--double_width);
+}
+
+input[type=text]{
+    width: var(--normal_width);
+    height: var(--normal_height);
 }
 
 #cart_elements{
-    grid-area: f;
+
 }
 
 .total_area{
-    grid-area: g;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: end;
+    padding-right: var(--normal_width);
+}
+
+#total_label{
+    text-align: end;
 }
 
 #total{
-    grid-area: h;
+    background: lightgreen;
+    width: var(--normal_width);
+    padding-right: var(--gap);
+    text-align: end;
 }
 
 .add_to_cart{
-    grid-area: i;
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-evenly;
+    grid-gap: var(--gap);
+    
 }
 
-button{
+#new_nom{
+    width: var(--double_width);
+}
 
+.add_button_area{
+    display: flex;
+    flex-wrap: nowrap;
+    align-items: center;
+    justify-content: space-evenly;
+    width: var(--normal_width);
+}
+
+#add_button{
+    background: none;
+    outline: none;
+    border: none;
+    width: var(--double_width);
+}
+
+#add_button:hover{
+    outline: auto;
 }
