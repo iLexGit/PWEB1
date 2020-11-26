@@ -15,9 +15,13 @@ body{
     grid-gap: var(--gap);
 }
 
-.table_head{
+input[type=text]{
+    height: var(--normal_height);
+}
+
+.horizontal_flex{
     display: flex;
-    flex-direction: row;
+    flex-wrap: nowrap;
     grid-gap: var(--gap);
 }
 
@@ -33,17 +37,37 @@ label{
     padding: var(--padding);
 }
 
+th{
+    width: var(--normal_width);
+    text-align: left;
+}
+
 #nom{
     width: var(--double_width);
 }
 
-input[type=text]{
-    width: var(--normal_width);
-    height: var(--normal_height);
+.cart_elements{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: column;
+    justify-content: space-evenly;
+    grid-gap: var(--gap);
 }
 
-#cart_elements{
+#item_nom{
+    width: var(--double_width);
+}
 
+article{
+    display: flex;
+    flex-wrap: nowrap;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.item_nom{
+    width: var(--double_width);
 }
 
 .total_area{
@@ -65,20 +89,11 @@ input[type=text]{
     text-align: end;
 }
 
-.add_to_cart{
-    display: flex;
-    flex-wrap: nowrap;
-    align-items: center;
-    justify-content: space-evenly;
-    grid-gap: var(--gap);
-    
-}
-
 #new_nom{
     width: var(--double_width);
 }
 
-.add_button_area{
+.button_area{
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
@@ -86,13 +101,13 @@ input[type=text]{
     width: var(--normal_width);
 }
 
-#add_button{
+#button{
     background: none;
     outline: none;
     border: none;
     width: var(--double_width);
 }
 
-#add_button:hover{
+#button:hover{
     outline: auto;
 }
