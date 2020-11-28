@@ -6,6 +6,16 @@
     --normal_height: 34px;
 }
 
+.errorField{
+    border: 1px solid red;
+    width: var(--normal_width);
+}
+
+.errorField_doble{
+    border: 1px solid red;
+    width: var(--double_width);
+}
+
 body{
     display: grid;
     grid-template-rows: var(--normal_height)
@@ -48,13 +58,11 @@ label{
 }
 
 .input{
-    height: var(--normal_height);
     width: var(--normal_width);
 }
 
 .input_doble{
     width: var(--double_width);
-    height: var(--normal_height);
 }
 
 .button_area{
@@ -76,12 +84,15 @@ label{
 
 #total_label{
     text-align: end;
+    width: var(--normal_width);
+    margin-right: var(--padding);
 }
 
 #total{
     background: lightgreen;
     width: var(--normal_width);
     padding-right: var(--gap);
+    margin-right: var(--padding);
     text-align: end;
 }
 
