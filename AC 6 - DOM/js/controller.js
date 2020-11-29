@@ -1,4 +1,4 @@
-var HTML_string = '<section class="horizontal_flex">'+
+var HTML_string = '<section class="horizontal_flex" id="titles_area">'+
                         '<label id="nom">Nom</label>'+
                         '<label id="unitats">Unitats</label>'+
                         '<label id="preu_unitat">Preu unitat</label>'+
@@ -11,7 +11,7 @@ var HTML_string = '<section class="horizontal_flex">'+
                         '<label id="total">0€</label>'+
                         '<div class="input"></div>'+
                     '</section>'+
-                    '<section class="horizontal_flex">'+
+                    '<section class="horizontal_flex" id="add_item_area">'+
                             '<input class="input_doble"  id="new_nom" type="text">'+
                             '<input class="input" id="new_unitats" type="text">'+
                             '<input class="input" id="new_preu_unitat" type="text">'+
@@ -25,11 +25,10 @@ var HTML_string = '<section class="horizontal_flex">'+
                     '</section>';
 
 class Item{
-    constructor(id, name, amount, unit_price){
-        this.id = id;
+    constructor(name, amount, unit_price){
         this.name = name;
         this.amount = amount;
-        this.item_price = unit_price;
+        this.unit_price = unit_price;
         this.price = (amount*unit_price);
     }
     updateItem(id){
@@ -75,25 +74,8 @@ class Cesta{
             cesta.Items.push(new Item(this.num_items, new_name, new_unitats, new_preu_unitat));
             let preu = cesta.Items[this.num_items].price.toString();
     
-            let article = document.createElement('article');
-            article.className="horizontal_flex";
-            article.id="item_" + this.num_items;
-    
-            article.innerHTML+='<input id="name_' + this.num_items + '" class="input_doble" type="text" value="'+new_name+'">'+
-                                '<input id="amount_' + this.num_items + '" class="input" type="text" value="'+new_unitats+'">'+
-                                '<input id="unit_price_' + this.num_items + '" class="input" type="text" value="'+new_preu_unitat+' €">'+
-                                '<input id="price_' + this.num_items + '" class="input" type="text" value="'+preu+' €" disabled>'+
-                                '<div class="button_area">'+
-                                    '<button id="edit_button_'+this.num_items+'" onclick="cesta.Items['+this.num_items+'].updateItem('+this.num_items+')">'+
-                                        '<svg class="svgIcon" viewBox="0 0 512 512"><g><g><g><path d="M400,0H112C50.144,0,0,50.144,0,112v288c0,61.856,50.144,112,112,112h288c61.856,0,112-50.144,112-112V112     C512,50.144,461.856,0,400,0z M480,400c0,44.183-35.817,80-80,80H112c-44.183,0-80-35.817-80-80V112c0-44.183,35.817-80,80-80     h288c44.183,0,80,35.817,80,80V400z" fill="#707070"  /><path d="M160,112h-32c-8.837,0-16,7.163-16,16v32c0,8.837,7.163,16,16,16h32c8.837,0,16-7.163,16-16v-32     C176,119.163,168.837,112,160,112z" fill="#707070"  /><path d="M160,224h-32c-8.837,0-16,7.163-16,16v32c0,8.837,7.163,16,16,16h32c8.837,0,16-7.163,16-16v-32     C176,231.163,168.837,224,160,224z" fill="#707070"  /><path d="M160,336h-32c-8.837,0-16,7.163-16,16v32c0,8.837,7.163,16,16,16h32c8.837,0,16-7.163,16-16v-32     C176,343.163,168.837,336,160,336z" fill="#707070"  /><rect x="208" y="128" width="192" height="32" fill="#707070"  /><rect x="208" y="240" width="192" height="32" fill="#707070"  /><rect x="208" y="352" width="192" height="32" fill="#707070"  /></g> </g></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g></svg>'+
-                                    '</button>'+
-                                    '<button id="delete_button'+this.num_items+'"onclick="deleteItem('+this.num_items+')">'+
-                                        '<svg class="svgIcon" viewBox="-10 -10 150 150"><g><path d="M70.086,112.138c3.867,0,7.009-3.142,7.009-7.009V49.06c0-3.869-3.142-7.008-7.009-7.008c-3.869,0-7.008,3.14-7.008,7.008v56.069C63.078,108.996,66.217,112.138,70.086,112.138z M126.155,14.017h-21.026V7.009C105.129,3.14,101.987,0,98.12,0H42.052c-3.869,0-7.008,3.14-7.008,7.009v7.008H14.018c-3.872,0-7.009,3.14-7.009,7.009s3.137,7.008,7.009,7.008v98.12c0,7.741,6.276,14.018,14.017,14.018h84.103c7.741,0,14.018-6.276,14.018-14.018v-98.12c3.867,0,7.008-3.14,7.008-7.008S130.022,14.017,126.155,14.017z M112.138,126.154H28.035v-98.12h84.103V126.154zM49.061,112.138c3.869,0,7.008-3.142,7.008-7.009V49.06c0-3.869-3.14-7.008-7.008-7.008s-7.009,3.14-7.009,7.008v56.069C42.052,108.996,45.192,112.138,49.061,112.138z M91.112,112.138c3.867,0,7.008-3.142,7.008-7.009V49.06c0-3.869-3.141-7.008-7.008-7.008s-7.009,3.14-7.009,7.008v56.069C84.104,108.996,87.245,112.138,91.112,112.138z" fill="#707070"/></g></svg>'+
-                                    '</button>'+
-                                '</div>';
-            
-            document.getElementById("item_list").appendChild(article);
-            
+            appendItemHTML(this.num_items, new_name, new_unitats, new_preu_unitat, preu);
+                
             this.num_items++;
             this.updateTotalPrice();
     
@@ -101,6 +83,27 @@ class Cesta{
             document.getElementById("new_unitats").value = "";
             document.getElementById("new_preu_unitat").value = "";
         }
+    }
+
+    deleteItem(id){
+        console.log("Deleting Item: " + id);
+        for(let i =0; i<this.Items.length ; i++){
+            if(this.Items[i].id == id){
+                this.Items.splice(i,1);
+            }
+        }
+        this.num_items--;
+        document.body.removeChild(document.getElementById("item_list"));
+
+        let item_list = document.createElement('section');
+        item_list.id="item_list";
+        document.body.appendChild(item_list);
+        this.Items.forEach(cesta.refreshCesta);
+        this.updateTotalPrice();
+    }
+
+    refreshCesta(item, index){
+        appendItemHTML(index, item.name, item.amount, item.unit_price, item.price);
     }
     
     /*updateCesta(){
@@ -157,6 +160,27 @@ function fieldError(opt, id){
     return error;
 }
 
+function appendItemHTML(num, name, amount, unit_price, price){
+    console.log("Appending Item" +  name);
+    let article = document.createElement('article');
+    article.className="horizontal_flex";
+    article.id="item_" + num;
+    article.innerHTML+='<input id="name_' + num + '" class="input_doble" type="text" value="'+name+'">'+
+                        '<input id="amount_' + num + '" class="input" type="text" value="'+amount+'">'+
+                        '<input id="unit_price_' + num + '" class="input" type="text" value="'+unit_price+' €">'+
+                        '<input id="price_' + num + '" class="input" type="text" value="'+price+' €" disabled>'+
+                        '<div class="button_area">'+
+                            '<button id="edit_button_'+ num + '" onclick="cesta.Items['+ num +'].updateItem('+num+')">'+
+                                '<svg class="svgIcon" viewBox="0 0 512 512"><g><g><g><path d="M400,0H112C50.144,0,0,50.144,0,112v288c0,61.856,50.144,112,112,112h288c61.856,0,112-50.144,112-112V112     C512,50.144,461.856,0,400,0z M480,400c0,44.183-35.817,80-80,80H112c-44.183,0-80-35.817-80-80V112c0-44.183,35.817-80,80-80     h288c44.183,0,80,35.817,80,80V400z" fill="#707070"  /><path d="M160,112h-32c-8.837,0-16,7.163-16,16v32c0,8.837,7.163,16,16,16h32c8.837,0,16-7.163,16-16v-32     C176,119.163,168.837,112,160,112z" fill="#707070"  /><path d="M160,224h-32c-8.837,0-16,7.163-16,16v32c0,8.837,7.163,16,16,16h32c8.837,0,16-7.163,16-16v-32     C176,231.163,168.837,224,160,224z" fill="#707070"  /><path d="M160,336h-32c-8.837,0-16,7.163-16,16v32c0,8.837,7.163,16,16,16h32c8.837,0,16-7.163,16-16v-32     C176,343.163,168.837,336,160,336z" fill="#707070"  /><rect x="208" y="128" width="192" height="32" fill="#707070"  /><rect x="208" y="240" width="192" height="32" fill="#707070"  /><rect x="208" y="352" width="192" height="32" fill="#707070"  /></g> </g></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g></svg>'+
+                            '</button>'+
+                            '<button id="delete_button'+ num +'"onclick="cesta.deleteItem('+num+')">'+
+                                '<svg class="svgIcon" viewBox="-10 -10 150 150"><g><path d="M70.086,112.138c3.867,0,7.009-3.142,7.009-7.009V49.06c0-3.869-3.142-7.008-7.009-7.008c-3.869,0-7.008,3.14-7.008,7.008v56.069C63.078,108.996,66.217,112.138,70.086,112.138z M126.155,14.017h-21.026V7.009C105.129,3.14,101.987,0,98.12,0H42.052c-3.869,0-7.008,3.14-7.008,7.009v7.008H14.018c-3.872,0-7.009,3.14-7.009,7.009s3.137,7.008,7.009,7.008v98.12c0,7.741,6.276,14.018,14.017,14.018h84.103c7.741,0,14.018-6.276,14.018-14.018v-98.12c3.867,0,7.008-3.14,7.008-7.008S130.022,14.017,126.155,14.017z M112.138,126.154H28.035v-98.12h84.103V126.154zM49.061,112.138c3.869,0,7.008-3.142,7.008-7.009V49.06c0-3.869-3.14-7.008-7.008-7.008s-7.009,3.14-7.009,7.008v56.069C42.052,108.996,45.192,112.138,49.061,112.138z M91.112,112.138c3.867,0,7.008-3.142,7.008-7.009V49.06c0-3.869-3.141-7.008-7.008-7.008s-7.009,3.14-7.009,7.008v56.069C84.104,108.996,87.245,112.138,91.112,112.138z" fill="#707070"/></g></svg>'+
+                            '</button>'+
+                        '</div>';
+
+    document.getElementById("item_list").appendChild(article);
+}
+
 /*function 
 }
 
@@ -169,10 +193,3 @@ function updateItem(id){
         cesta.updateTotalPrice();
     }
 }*/
-
-function deleteItem(id){
-    //console.log("Deleting Item: " + id);
-    let art_to_delete = document.getElementById("item_"+id);
-    art_to_delete.parentNode.removeChild(art_to_delete);
-    cesta.updateTotalPrice();
-}

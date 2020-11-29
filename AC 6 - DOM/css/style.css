@@ -18,11 +18,23 @@
 
 body{
     display: grid;
-    grid-template-rows: var(--normal_height)
-                        auto
-                        var(--normal_height)
-                        var(--normal_height);
+    grid-template-areas: 'cabeceras'
+                        'lista'
+                        'total'
+                        'nuevo';
     grid-gap: var(--gap);
+}
+
+#titles_area{
+    grid-area: cabeceras;
+}
+
+#item_list{
+    grid-area: lista;
+}
+
+#add_item_area{
+    grid-area: nuevo;
 }
 
 .horizontal_flex{
@@ -30,6 +42,7 @@ body{
     flex-wrap: nowrap;
     align-items: center;
     justify-content: space-around;
+    height: var(--normal_height);
     grid-gap: var(--gap);
 }
 
@@ -74,10 +87,12 @@ label{
 }
 
 .total_area{
+    grid-area: total;
     display: flex;
     flex-wrap: nowrap;
     align-items: center;
     justify-content: end;
+    height: var(--normal_height);
     font-size: 25px;
     font-weight: bold;
 }
