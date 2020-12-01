@@ -1,14 +1,13 @@
 var HTML_string = '<section class="horizontal_flex" id="titles_area">'+
                         '<label id="nom">Nom</label>'+
                         '<label id="unitats">Unitats</label>'+
-                        '<label id="preu_unitat">Preu unitat</label>'+
-                        '<label id="preu_total">Preu total</label>'+
+                        '<label id="preu_unitat">Preu unitat (€)</label>'+
+                        '<label id="preu_total">Preu total (€)</label>'+
                         '<label id="opcions">Opcions</label>'+
-                    '</section><section id="item_list">'+
                     '</section>'+
                     '<section class="total_area">'+
                         '<label id="total_label">Total:</label>'+
-                        '<label id="total">0€</label>'+
+                        '<label id="total">0 €</label>'+
                         '<div class="input"></div>'+
                     '</section>'+
                     '<section class="horizontal_flex" id="add_item_area">'+
@@ -22,6 +21,8 @@ var HTML_string = '<section class="horizontal_flex" id="titles_area">'+
                                 '</svg>'+
                             '</button>'+
                         '</div>'+
+                    '</section>'+
+                    '<section id="item_list">'+
                     '</section>';
 
 class Item{
@@ -30,16 +31,6 @@ class Item{
         this.amount = amount;
         this.unit_price = unit_price;
         this.price = (amount*unit_price);
-    }
-    updateItem(id){
-        if(!fieldError("update", id)){
-            this.name = document.getElementById("name_" + id).value;
-            this.amount = document.getElementById("amount_" + id).value;
-            this.unit_price = document.getElementById("unit_price_" + id).value;
-            this.price = (amount*unit_price);
-            document.getElementById("price_" + id).value = this.price.toString();
-            //cesta.updateCesta();
-        }
     }
 }
 
@@ -53,16 +44,15 @@ class Cesta{
     }
 
     updateTotalPrice(){
-        this.total_price = 0.0;
-        for(let i = 0; i< this.Items.length ; i++){
-            try{
-                this.total_price+=this.Items[i].price;
-                //temp+=parseFloat(document.getElementById("price_" + i).value.toFixed());
-            }catch(e){
-                //console.log("inexisting item");
-            }
-        }        
-        document.getElementById("total").innerHTML=this.total_price.toString() + "€";
+        try{
+            this.total_price = this.Items.reduce(
+                function (total, currValue){
+                    return {price: total.price+currValue.price};
+            }).price;
+        }catch(e){
+            this.total_price = 0;
+        }
+        document.getElementById("total").innerHTML=this.total_price.toFixed(2).toString() + " €";
     }
 
     addItem(){
@@ -70,9 +60,9 @@ class Cesta{
             let new_name = document.getElementById("new_nom").value;
             let new_unitats = document.getElementById("new_unitats").value;
             let new_preu_unitat = document.getElementById("new_preu_unitat").value;
-    
-            cesta.Items.push(new Item(this.num_items, new_name, new_unitats, new_preu_unitat));
-            let preu = cesta.Items[this.num_items].price.toString();
+
+            cesta.Items.push(new Item(new_name, new_unitats, new_preu_unitat));
+            let preu = cesta.Items[this.num_items].price.toFixed(2).toString();
     
             appendItemHTML(this.num_items, new_name, new_unitats, new_preu_unitat, preu);
                 
@@ -85,39 +75,41 @@ class Cesta{
         }
     }
 
-    deleteItem(id){
-        console.log("Deleting Item: " + id);
-        for(let i =0; i<this.Items.length ; i++){
-            if(this.Items[i].id == id){
-                this.Items.splice(i,1);
-            }
+    updateItem(id){
+        if(!fieldError("update", id)){
+            this.Items.map(
+                function(currValue, currIndex){
+                    cesta.Items[currIndex].name = document.getElementById("name_" + currIndex).value;
+                    cesta.Items[currIndex].amount = document.getElementById("amount_" + currIndex).value;
+                    cesta.Items[currIndex].unit_price = document.getElementById("unit_price_" + currIndex).value;
+                    cesta.Items[currIndex].price = (cesta.Items[currIndex].amount*cesta.Items[currIndex].unit_price);
+                    document.getElementById("price_" + currIndex).value = cesta.Items[currIndex].price.toFixed(2).toString() + " €";
+                }
+            )
+            cesta.updateTotalPrice();
         }
+    }
+
+    deleteItem(id){
+        this.Items.splice(id,1);
         this.num_items--;
         document.body.removeChild(document.getElementById("item_list"));
 
         let item_list = document.createElement('section');
         item_list.id="item_list";
         document.body.appendChild(item_list);
-        this.Items.forEach(cesta.refreshCesta);
+        this.Items.forEach(cesta.reloadCesta);
         this.updateTotalPrice();
     }
 
-    refreshCesta(item, index){
+    reloadCesta(item, index){
         appendItemHTML(index, item.name, item.amount, item.unit_price, item.price);
     }
-    
-    /*updateCesta(){
-        let cesta_delete = document.getElementById("item_list");
-        for(let i=0; i<cesta.Items.length < i++){
-
-        }
-    }*/
 }
 
 var cesta = new Cesta();
 
 function fieldError(opt, id){
-    //console.log("Checking...");
     let error = false;
     switch(opt){
         case "add":
@@ -161,16 +153,15 @@ function fieldError(opt, id){
 }
 
 function appendItemHTML(num, name, amount, unit_price, price){
-    console.log("Appending Item" +  name);
     let article = document.createElement('article');
     article.className="horizontal_flex";
     article.id="item_" + num;
     article.innerHTML+='<input id="name_' + num + '" class="input_doble" type="text" value="'+name+'">'+
                         '<input id="amount_' + num + '" class="input" type="text" value="'+amount+'">'+
-                        '<input id="unit_price_' + num + '" class="input" type="text" value="'+unit_price+' €">'+
+                        '<input id="unit_price_' + num + '" class="input" type="text" value="'+unit_price+'">'+
                         '<input id="price_' + num + '" class="input" type="text" value="'+price+' €" disabled>'+
                         '<div class="button_area">'+
-                            '<button id="edit_button_'+ num + '" onclick="cesta.Items['+ num +'].updateItem('+num+')">'+
+                            '<button id="edit_button_'+ num + '" onclick="cesta.updateItem('+num+')">'+
                                 '<svg class="svgIcon" viewBox="0 0 512 512"><g><g><g><path d="M400,0H112C50.144,0,0,50.144,0,112v288c0,61.856,50.144,112,112,112h288c61.856,0,112-50.144,112-112V112     C512,50.144,461.856,0,400,0z M480,400c0,44.183-35.817,80-80,80H112c-44.183,0-80-35.817-80-80V112c0-44.183,35.817-80,80-80     h288c44.183,0,80,35.817,80,80V400z" fill="#707070"  /><path d="M160,112h-32c-8.837,0-16,7.163-16,16v32c0,8.837,7.163,16,16,16h32c8.837,0,16-7.163,16-16v-32     C176,119.163,168.837,112,160,112z" fill="#707070"  /><path d="M160,224h-32c-8.837,0-16,7.163-16,16v32c0,8.837,7.163,16,16,16h32c8.837,0,16-7.163,16-16v-32     C176,231.163,168.837,224,160,224z" fill="#707070"  /><path d="M160,336h-32c-8.837,0-16,7.163-16,16v32c0,8.837,7.163,16,16,16h32c8.837,0,16-7.163,16-16v-32     C176,343.163,168.837,336,160,336z" fill="#707070"  /><rect x="208" y="128" width="192" height="32" fill="#707070"  /><rect x="208" y="240" width="192" height="32" fill="#707070"  /><rect x="208" y="352" width="192" height="32" fill="#707070"  /></g> </g></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g><g   ></g></svg>'+
                             '</button>'+
                             '<button id="delete_button'+ num +'"onclick="cesta.deleteItem('+num+')">'+
@@ -180,16 +171,3 @@ function appendItemHTML(num, name, amount, unit_price, price){
 
     document.getElementById("item_list").appendChild(article);
 }
-
-/*function 
-}
-
-function updateItem(id){
-
-    if(!fieldError("update", id)){
-        let amount = document.getElementById("amount_" + id).value;
-        let unit_price = document.getElementById("unit_price_" + id).value;
-        document.getElementById("price_" + id).value = (amount*unit_price + " €").toString();
-        cesta.updateTotalPrice();
-    }
-}*/
